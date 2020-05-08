@@ -35,8 +35,8 @@ it's a separate piece which the evaluated tools below do not handle.
 
 The Marketplace is a platform to buy and sell goods. It includes the following 
 actors and use cases:
-- A Customer finds goods from vendors
-- A Vendor lists their goods for sale
+- A Customer finds products from vendors
+- A Vendor has many products for sale
 
 Part of the Marketplace team
 - A Customer Support agent who responds to feedback from users
