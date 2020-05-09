@@ -2,13 +2,13 @@
 
 module Api
   module V1
-    # ProductSerializer presents Product data.
+    # ProductSerializer presents data for an item a vendor sells.
     class ProductSerializer
       include FastJsonapi::ObjectSerializer
 
-      attributes :name
-
       belongs_to :vendor
+
+      attributes :name
     end
   end
 end

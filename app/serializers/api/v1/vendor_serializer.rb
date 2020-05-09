@@ -6,6 +6,8 @@ module Api
     class VendorSerializer
       include FastJsonapi::ObjectSerializer
 
+      belongs_to :address, serializer: Api::V1::Vendors::AddressSerializer
+
       attributes :name
     end
   end

@@ -1,6 +1,23 @@
 # frozen_string_literal: true
 
 #
+# Countries
+#
+Country.destroy_all
+
+countries = ISO3166::Country.countries.map do |country|
+  {
+    name:       country.name,
+    iso:        country.alpha2,
+    iso3:       country.alpha3,
+    created_at: Time.current,
+    updated_at: Time.current
+  }
+end
+
+Country.upsert_all(countries)
+
+#
 # Users
 #
 User.destroy_all
@@ -15,7 +32,7 @@ end
 Vendor.destroy_all
 
 21.times do
-  Vendor.create!(name: Faker::Company.name)
+  Vendor.create!(name: Faker::Company.unique.name, address: Address.all.sample)
 end
 
 #

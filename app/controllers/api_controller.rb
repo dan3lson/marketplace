@@ -18,19 +18,27 @@ class ApiController < ActionController::API
   end
 
   def bad_request(errors = nil)
-    render_api_response(body: errors || { error: 'Invalid request' }, code: 400)
+    body = errors || { error: 'Invalid request' }
+
+    render_api_response(body: body, code: 400)
   end
 
   def unauthorized(errors = nil)
-    render_api_response(body: errors || { error: 'Unauthorized request credentials' }, code: 401)
+    body = errors || { error: 'Unauthorized request credentials' }
+
+    render_api_response(body: body, code: 401)
   end
 
   def not_found(errors = nil)
-    render_api_response(body: errors || { error: 'Specified resource not found' }, code: 404)
+    body = errors || { error: 'Specified resource not found' }
+
+    render_api_response(body: body, code: 404)
   end
 
   def internal_error(errors)
-    render_api_response(body: errors || { error: 'Unhandled internal server error' }, code: 500)
+    body = errors || { error: 'Unhandled internal server error' }
+
+    render_api_response(body: body, code: 500)
   end
 
   def success(body: nil, code: 200)
