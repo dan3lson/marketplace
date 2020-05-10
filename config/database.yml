@@ -78,8 +78,10 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
+#production:
+#  <<: *default
+#  database: marketplace_production
+#  username: marketplace
+#  password: <%#= ENV['MARKETPLACE_DATABASE_PASSWORD'] %>
 production:
-  <<: *default
-  database: marketplace_production
-  username: marketplace
-  password: <%= ENV['MARKETPLACE_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
