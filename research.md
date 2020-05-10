@@ -54,7 +54,7 @@ targets
 
 ### CanCanCan
 
-- Modernized version of CanCan
+- Modernized version created in 2019 from CanCan (created in 2009)
 - DSL
 - Housed in one Ability class
 
@@ -64,8 +64,8 @@ My Findings
 
 ### Pundit
 
-- Fresh implementation
-- PORC
+- Fresh implementation created in 2012
+- Define and enforce policies for your resources using simple Ruby objects -- PORC
 - Organized in individual classes
 
 My Findings:
