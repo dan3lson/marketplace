@@ -23,7 +23,7 @@ Country.upsert_all(countries)
 User.destroy_all
 
 10.times do
-  User.create!(email: Faker::Internet.email)
+  User.create!(email: Faker::Internet.email, password: 'Testing1234!')
 end
 
 #
