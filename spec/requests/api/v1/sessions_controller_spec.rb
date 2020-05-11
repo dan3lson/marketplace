@@ -9,7 +9,7 @@ RSpec.describe Api::V1::SessionsController, type: :request do
         user = create(:user)
         params = { email: user.email, password: '' }
 
-        post api_v1_log_in_path, params: params
+        post api_v1_sign_in_path, params: params
 
         expect(response).to have_http_status(:unauthorized)
       end
@@ -20,7 +20,7 @@ RSpec.describe Api::V1::SessionsController, type: :request do
         user = create(:user)
         params = { email: user.email, password: 'password123' }
 
-        post api_v1_log_in_path, params: params
+        post api_v1_sign_in_path, params: params
 
         expect(response).to have_http_status(:unauthorized)
       end
@@ -31,7 +31,7 @@ RSpec.describe Api::V1::SessionsController, type: :request do
         user = create(:user)
         params = { email: "1#{user.email}", password: user.password }
 
-        post api_v1_log_in_path, params: params
+        post api_v1_sign_in_path, params: params
 
         expect(response).to have_http_status(:unauthorized)
       end
@@ -42,7 +42,7 @@ RSpec.describe Api::V1::SessionsController, type: :request do
         user = create(:user)
         params = { email: '', password: user.password }
 
-        post api_v1_log_in_path, params: params
+        post api_v1_sign_in_path, params: params
 
         expect(response).to have_http_status(:unauthorized)
       end
@@ -53,7 +53,7 @@ RSpec.describe Api::V1::SessionsController, type: :request do
         user = create(:user)
         params = { email: nil, password: user.password }
 
-        post api_v1_log_in_path, params: params
+        post api_v1_sign_in_path, params: params
 
         expect(response).to have_http_status(:unauthorized)
       end
@@ -64,7 +64,7 @@ RSpec.describe Api::V1::SessionsController, type: :request do
         user = create(:user)
         params = { email: user.email, password: user.password }
 
-        post api_v1_log_in_path, params: params
+        post api_v1_sign_in_path, params: params
 
         expect(response).to have_http_status(:ok)
       end

@@ -3,7 +3,8 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      resource :session, only: [:create], path: :log_in, as: :log_in
+      post 'sign_up', to: 'users#create'
+      post 'sign_in', to: 'sessions#create'
 
       resources :products, only: [:index]
       resources :vendors, only: [] do
