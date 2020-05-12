@@ -2,5 +2,7 @@
 
 # User stores customer data.
 class User < ApplicationRecord
-  validates :email, presence: true, uniqueness: true
+  has_secure_password
+
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
 end

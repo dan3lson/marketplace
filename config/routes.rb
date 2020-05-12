@@ -3,7 +3,10 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      resources :products, only: :index
+      post 'sign_up', to: 'users#create'
+      post 'sign_in', to: 'sessions#create'
+
+      resources :products, only: [:index]
       resources :vendors, only: [] do
         resources :products, only: %i[index destroy], controller: :'vendors/products'
       end
