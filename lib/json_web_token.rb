@@ -9,7 +9,8 @@ class JsonWebToken
 
     def decode(payload)
       HashWithIndifferentAccess.new(JWT.decode(payload, secret_key_base)[0])
-    rescue JWT::DecodedError => _e
+    rescue JWT::DecodeError => e
+      Rails.logger.error "JsonWebToken#decode error: #{e}"
       nil
     end
 

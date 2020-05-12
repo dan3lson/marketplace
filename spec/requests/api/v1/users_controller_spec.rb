@@ -4,56 +4,60 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::UsersController, type: :request do
   describe 'POST #create' do
-    let(:valid_email) { 'sha@nene.com'}
-    let(:valid_password) { 'password'}
+    let(:valid_email) { 'sha@nene.com' }
+    let(:valid_password) { 'password' }
+
+    def sign_up(params)
+      post api_v1_sign_up_path, params: params
+    end
 
     context 'when a guest signs up with a blank password' do
       it 'prevents the account creation' do
-        params = { email: valid_email, password: '' }
+        params = { user: { email: valid_email, password: '' } }
 
-        post api_v1_sign_up_path, params: params
+        sign_up(params)
 
-        expect(response).to have_http_status(:bad_request)
+        expect(response).to be_bad_request
       end
     end
 
     context 'when a guest signs up without a password' do
       it 'prevents the account creation' do
-        params = { email: valid_email, password: nil }
+        params = { user: { email: valid_email, password: nil } }
 
-        post api_v1_sign_up_path, params: params
+        sign_up(params)
 
-        expect(response).to have_http_status(:bad_request)
+        expect(response).to be_bad_request
       end
     end
 
     context 'when a guest signs up with a blank email' do
       it 'prevents the account creation' do
-        params = { email: '', password: valid_password }
+        params = { user: { email: '', password: valid_password } }
 
-        post api_v1_sign_up_path, params: params
+        sign_up(params)
 
-        expect(response).to have_http_status(:bad_request)
+        expect(response).to be_bad_request
       end
     end
 
     context 'when a guest signs up without email' do
       it 'prevents the account creation' do
-        params = { email: nil, password: valid_password }
+        params = { user: { email: nil, password: valid_password } }
 
-        post api_v1_sign_up_path, params: params
+        sign_up(params)
 
-        expect(response).to have_http_status(:bad_request)
+        expect(response).to be_bad_request
       end
     end
 
     context 'when a guest signs up with a valid email and password' do
-      it 'prevents the account creation' do
-        params = { email: valid_email, password: valid_password }
+      it 'creates an account' do
+        params = { user: { email: valid_email, password: valid_password } }
 
-        post api_v1_sign_up_path, params: params
+        sign_up(params)
 
-        expect(response).to have_http_status(:ok)
+        expect(response).to be_ok
       end
     end
   end
