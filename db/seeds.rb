@@ -44,3 +44,13 @@ vendors = Vendor.all
   vendor = vendors.sample
   vendor.products.create!(name: Faker::Commerce.product_name)
 end
+
+#
+# Roles
+#
+Role.destroy_all
+
+names = %i[customer vendor master_admin]
+roles = names.map { |name| Role.create!(name: name) }
+
+User.all.each { |user| user.assignments.create!(role: roles.sample) }

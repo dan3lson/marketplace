@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_11_193605) do
+ActiveRecord::Schema.define(version: 2020_05_12_160950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -26,6 +26,16 @@ ActiveRecord::Schema.define(version: 2020_05_11_193605) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["country_id"], name: "index_addresses_on_country_id"
+  end
+
+  create_table "assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "role_id", null: false
+    t.uuid "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["role_id"], name: "index_assignments_on_role_id"
+    t.index ["user_id", "role_id"], name: "index_assignments_on_user_id_and_role_id", unique: true
+    t.index ["user_id"], name: "index_assignments_on_user_id"
   end
 
   create_table "countries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -47,6 +57,13 @@ ActiveRecord::Schema.define(version: 2020_05_11_193605) do
     t.index ["vendor_id"], name: "index_products_on_vendor_id"
   end
 
+  create_table "roles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_roles_on_name"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -65,6 +82,8 @@ ActiveRecord::Schema.define(version: 2020_05_11_193605) do
   end
 
   add_foreign_key "addresses", "countries"
+  add_foreign_key "assignments", "roles"
+  add_foreign_key "assignments", "users"
   add_foreign_key "products", "vendors"
   add_foreign_key "vendors", "addresses"
 end

@@ -3,25 +3,25 @@
 # ResponseRenderable provides helpers to render JSON API responses.
 module ResponseRenderable
   def bad_request(errors = nil)
-    body = errors || error(message: 'Invalid request')
+    body = errors || errors(message: 'Invalid request')
 
-    render_api_response(body: body, code: 400)
+    render_api_response(body: { errors: body }, code: 400)
   end
 
   def unauthorized(errors = nil)
-    body = errors || error(message: 'Unauthorized request credentials')
+    body = errors || errors(message: 'Unauthorized credentials')
 
     render_api_response(body: body, code: 401)
   end
 
   def not_found(errors = nil)
-    body = errors || error(message: 'Specified resource not found')
+    body = errors || errors(message: 'Specified resource not found')
 
     render_api_response(body: body, code: 404)
   end
 
   def internal_error(errors)
-    body = errors || error(message: 'Unhandled internal server error')
+    body = errors || errors(message: 'Unhandled internal server error')
 
     render_api_response(body: body, code: 500)
   end
@@ -32,8 +32,8 @@ module ResponseRenderable
 
   private
 
-  def error(message:)
-    { error: message }
+  def errors(message:)
+    { errors: message }
   end
 
   def render_api_response(body: nil, code:)
