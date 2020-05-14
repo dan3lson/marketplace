@@ -17,4 +17,23 @@ RSpec.describe User, type: :model do
     subject { create(:user) }
     it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
   end
+
+  describe '#role?' do
+    context 'when assigned a :customer role' do
+      it 'confirms one role' do
+        user = create(:customer).user
+
+        expect(user).to be_role(:customer)
+      end
+    end
+
+    context 'when assigned a :customer and :vip role' do
+      it 'confirms multiple roles' do
+        user = create(:customer).user
+        create(:assignment, user: user, role: create(:role, name: 'vip'))
+
+        expect(user).to be_role(:customer)
+      end
+    end
+  end
 end
