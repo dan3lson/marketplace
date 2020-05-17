@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_12_160950) do
+ActiveRecord::Schema.define(version: 2020_05_17_024803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -48,6 +48,11 @@ ActiveRecord::Schema.define(version: 2020_05_12_160950) do
     t.index ["iso3"], name: "index_countries_on_iso3"
   end
 
+  create_table "customers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.index ["user_id"], name: "index_customers_on_user_id"
+  end
+
   create_table "products", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.uuid "vendor_id", null: false
@@ -69,7 +74,16 @@ ActiveRecord::Schema.define(version: 2020_05_12_160950) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "password_digest", null: false
+    t.string "first_name", null: false
+    t.string "last_name", null: false
     t.index ["email"], name: "index_users_on_email"
+  end
+
+  create_table "vendor_managers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_vendor_managers_on_user_id"
   end
 
   create_table "vendors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -77,13 +91,18 @@ ActiveRecord::Schema.define(version: 2020_05_12_160950) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "address_id", null: false
+    t.uuid "vendor_manager_id", null: false
     t.index ["address_id"], name: "index_vendors_on_address_id"
     t.index ["name"], name: "index_vendors_on_name"
+    t.index ["vendor_manager_id"], name: "index_vendors_on_vendor_manager_id"
   end
 
   add_foreign_key "addresses", "countries"
   add_foreign_key "assignments", "roles"
   add_foreign_key "assignments", "users"
+  add_foreign_key "customers", "users"
   add_foreign_key "products", "vendors"
+  add_foreign_key "vendor_managers", "users"
   add_foreign_key "vendors", "addresses"
+  add_foreign_key "vendors", "vendor_managers"
 end

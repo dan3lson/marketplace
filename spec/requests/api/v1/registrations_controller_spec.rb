@@ -8,25 +8,16 @@ RSpec.describe Api::V1::RegistrationsController, type: :request do
     let(:valid_email) { 'sha@nene.com' }
     let(:valid_password) { 'password' }
 
-    def sign_up(params)
-      post api_v1_sign_up_path, params: params
-    end
-
-    def params(email:, password:, roles: [:customer])
-      { registration: { email: email, password: password, roles: roles } }
-    end
-
     context 'when the password is empty' do
       it 'prevents the account creation' do
-        sign_up(params(email: valid_email, password: ''))
-
+        post api_v1_sign_up_path, params: { registration: attributes_for(:registration, password: '') }
         expect(JSON.parse(response.body)['errors'].keys).to include('password')
       end
     end
 
     context 'when the password is nil' do
       it 'prevents the account creation' do
-        sign_up(params(email: valid_email, password: nil))
+        post api_v1_sign_up_path, params: { registration: attributes_for(:registration, password: nil) }
 
         expect(JSON.parse(response.body)['errors'].keys).to include('password')
       end
@@ -34,7 +25,7 @@ RSpec.describe Api::V1::RegistrationsController, type: :request do
 
     context 'when the email is empty' do
       it 'prevents the account creation' do
-        sign_up(params(email: '', password: valid_password))
+        post api_v1_sign_up_path, params: { registration: attributes_for(:registration, email: '') }
 
         expect(JSON.parse(response.body)['errors'].keys).to include('email')
       end
@@ -42,31 +33,31 @@ RSpec.describe Api::V1::RegistrationsController, type: :request do
 
     context 'when the email is nil' do
       it 'prevents the account creation' do
-        sign_up(params(email: nil, password: valid_password))
+        post api_v1_sign_up_path, params: { registration: attributes_for(:registration, email: nil) }
 
         expect(JSON.parse(response.body)['errors'].keys).to include('email')
       end
     end
 
-    context 'when roles are empty' do
+    context 'when user_type is empty' do
       it 'prevents the account creation' do
-        sign_up(params(email: valid_email, password: valid_password, roles: []))
+        post api_v1_sign_up_path, params: { registration: attributes_for(:registration, user_type: '') }
 
-        expect(JSON.parse(response.body)['errors'].keys).to include('roles')
+        expect(JSON.parse(response.body)['errors'].keys).to include('user_type')
       end
     end
 
-    context 'when roles include a nonexistant role' do
+    context 'when user_type does not exist' do
       it 'prevents the account creation' do
-        sign_up(params(email: valid_email, password: valid_password, roles: ['foo']))
+        post api_v1_sign_up_path, params: { registration: attributes_for(:registration, user_type: 'foobar') }
 
-        expect(JSON.parse(response.body)['errors'].keys).to include('roles')
+        expect(JSON.parse(response.body)['errors'].keys).to include('user_type')
       end
     end
 
-    context 'when the email and password are valid' do
+    context 'when form submission is successful' do
       it 'creates an account' do
-        sign_up(params(email: valid_email, password: valid_password))
+        post api_v1_sign_up_path, params: { registration: attributes_for(:registration) }
 
         expect(response).to be_ok
       end

@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :country do
     name { Faker::Address.country }
-    iso { Faker::Address.country_code }
-    iso3 { Faker::Address.country_code_long }
+    iso { Faker::Address.unique.country_code }
+    iso3 { Faker::Address.unique.country_code_long }
   end
 end

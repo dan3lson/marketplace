@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 #
+# Roles
+#
+Role.destroy_all
+
+names = %i[customer vendor_manager master_admin]
+names.map { |name| Role.create!(name: name) }
+
+#
 # Countries
 #
 Country.destroy_all
@@ -22,8 +30,17 @@ Country.upsert_all(countries)
 #
 User.destroy_all
 
-10.times do
-  User.create!(email: Faker::Internet.email, password: 'Testing1234!')
+23.times do
+  user_type = %w[customer vendor_manager].sample
+  user = User.create!(
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    email: Faker::Internet.email,
+    password: 'Testing1234!',
+  )
+  user_type.classify.constantize.create!(user: user)
+  role = Role.find_by(name: user_type)
+  user.assignments.create!(role: role)
 end
 
 #
@@ -31,8 +48,12 @@ end
 #
 Vendor.destroy_all
 
-21.times do
-  Vendor.create!(name: Faker::Company.unique.name, address: Address.all.sample)
+23.times do
+  Vendor.create!(
+    name: Faker::Company.unique.name,
+    address: Address.all.sample,
+    vendor_manager: VendorManager.all.sample
+    )
 end
 
 #
@@ -44,13 +65,3 @@ vendors = Vendor.all
   vendor = vendors.sample
   vendor.products.create!(name: Faker::Commerce.product_name)
 end
-
-#
-# Roles
-#
-Role.destroy_all
-
-names = %i[customer vendor master_admin]
-roles = names.map { |name| Role.create!(name: name) }
-
-User.all.each { |user| user.assignments.create!(role: roles.sample) }

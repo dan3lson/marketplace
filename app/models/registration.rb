@@ -4,12 +4,14 @@
 class Registration
   include ActiveModel::Model
 
-  attr_accessor :email, :password, :roles
+  attr_accessor :first_name, :last_name, :email, :password, :user_type
 
+  validates :first_name, presence: true
+  validates :last_name, presence: true
   validates :email, presence: true
   validate  :unique_email?
   validates :password, presence: true
-  validate :present_roles?
+  validates :user_type, inclusion: { in: %w[customer vendor_manager] }
 
   def register
     user = build_user
@@ -17,15 +19,13 @@ class Registration
 
     ActiveRecord::Base.transaction do
       user.save!
-      assign_roles!(user)
+      create_user_type!(user)
+      assign_role!(user)
     end
 
     user
   end
 
-  def roles=(roles)
-    @roles = roles.map { |name| Role.find_by(name: name) }
-  end
 
   private
 
@@ -35,20 +35,28 @@ class Registration
     errors.add(:email, 'has already been taken')
   end
 
-  def present_roles?
-    blank_roles = roles&.any? { |role| role.blank? }
-    return unless blank_roles
-
-    errors.add(:roles, 'must exist and be valid')
-  end
-
   def build_user
-    User.new(email: email, password: password)
+    User.new(
+      first_name: first_name,
+      last_name: last_name,
+      email: email,
+      password: password,
+    )
   end
 
-  def assign_roles!(user)
-    roles.each do |role|
-      user.assignments.create!(role: role)
-    end
+  def role
+    Role.find_by(name: user_type.downcase)
+  end
+
+  def user_type_model
+    user_type.classify.constantize
+  end
+
+  def create_user_type!(user)
+    user_type_model.create!(user: user)
+  end
+
+  def assign_role!(user)
+    user.assignments.create!(role: role)
   end
 end

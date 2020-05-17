@@ -5,5 +5,6 @@ FactoryBot.define do
     name { Faker::Company.name }
 
     address
+    vendor_manager
   end
 end

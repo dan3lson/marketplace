@@ -4,8 +4,8 @@ FactoryBot.define do
   factory :role do
     name { 'customer' }
 
-    trait :vendor do
-      name { 'vendor' }
+    trait :vendor_manager do
+      name { 'vendor_manager' }
     end
 
     trait :master_admin do
