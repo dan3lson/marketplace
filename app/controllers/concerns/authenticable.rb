@@ -3,13 +3,13 @@
 # Authenticable provides helpers for establishing the current user.
 module Authenticable
   def current_user
-    @current_user ||= User.find_by(id: decoded_token&.dig(:user_id))
+    @current_user ||= User.find_by(id: decoded_token&.dig(:user_id)) || User.new
   end
 
   protected
 
   def authenticate_user
-    unauthorized unless current_user
+    unauthorized if !current_user.persisted?
   end
 
   private

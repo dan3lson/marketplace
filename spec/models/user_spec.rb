@@ -35,5 +35,13 @@ RSpec.describe User, type: :model do
         expect(user).to be_role(:customer)
       end
     end
+
+    context 'when assigned a :guest role' do
+      it 'confirms no user is authenticated' do
+        user = build(:user)
+
+        expect(user).to be_role(:guest)
+      end
+    end
   end
 end

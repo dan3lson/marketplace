@@ -7,4 +7,6 @@ class Vendor < ApplicationRecord
   has_many :products, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
+
+  alias :manager :vendor_manager
 end

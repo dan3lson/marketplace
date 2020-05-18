@@ -14,6 +14,8 @@ class User < ApplicationRecord
   validates :last_name, presence: true
 
   def role?(role)
+    return true if role == :guest && !persisted?
+
     roles.any? { |r| r.name.underscore.to_sym == role }
   end
 end
