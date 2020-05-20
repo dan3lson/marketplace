@@ -5,7 +5,8 @@ module Api
     # ProductsController
     class ProductsController < ApiController
       def index
-        products = policy_scope [:api, :v1, Product.all]
+        products = Product.all
+        authorize! :index, products
         options = { include: [:vendor, :'vendor.address'] }
 
         success body: Api::V1::ProductSerializer.new(products, options).serializable_hash

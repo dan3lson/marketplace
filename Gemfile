@@ -9,6 +9,7 @@ ruby '2.7.1'
 gem 'bcrypt', '~> 3.1.7'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
+gem 'cancancan'
 gem 'countries'
 gem 'fast_jsonapi'
 gem 'jwt'
@@ -16,7 +17,6 @@ gem 'jwt'
 # gem 'image_processing', '~> 1.2'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 4.1'
-gem 'pundit'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 gem 'rails', '~> 6.0.3'

@@ -10,7 +10,7 @@ module Api
         def index
           vendor = Vendor.find(params[:vendor_id])
           products = vendor.products
-          authorize [:api, :v1, :vendors, products]
+          authorize! :index, products
           body = Api::V1::Vendors::ProductSerializer.new(products).serializable_hash
 
           success body: body

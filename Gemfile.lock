@@ -69,6 +69,7 @@ GEM
       msgpack (~> 1.0)
     builder (3.2.4)
     byebug (11.1.3)
+    cancancan (3.1.0)
     coderay (1.1.2)
     concurrent-ruby (1.1.6)
     countries (3.0.1)
@@ -125,8 +126,6 @@ GEM
       pry (>= 0.10.4)
     puma (4.3.3)
       nio4r (~> 2.0)
-    pundit (2.1.0)
-      activesupport (>= 3.0.0)
     rack (2.2.2)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -206,6 +205,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootsnap (>= 1.4.2)
   byebug
+  cancancan
   countries
   database_cleaner-active_record
   factory_bot_rails
@@ -216,7 +216,6 @@ DEPENDENCIES
   pg (>= 0.18, < 2.0)
   pry-rails (~> 0.3.9)
   puma (~> 4.1)
-  pundit
   rails (~> 6.0.3)
   rspec-rails (~> 3.9.0)
   shoulda-matchers!

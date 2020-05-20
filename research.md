@@ -38,7 +38,7 @@ actors and use cases:
 - A Customer finds products from vendors
 - A Vendor has many products for sale
 
-Part of the Marketplace team
+Part of the Marketplace team (not implemented -- included for example purposes)
 - A Customer Support agent who responds to feedback from users
 - A Finance Admin tracks sales metrics
 - A Compliance officer who gives vendors the boot if they don't meet sales 
