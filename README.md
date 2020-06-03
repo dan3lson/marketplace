@@ -1,24 +1,19 @@
-# README
+# Marketplace
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+An API-only Rails app to buy and sell goods. Originally developed as a
+proof-of-concept for authorization via Pundit and CanCancan.
 
-Things you may want to cover:
+Things to note:
 
-* Ruby version
+* Ruby version: 2.7.1
+* Rails version: 6.0.3
+* Postgresql database
 
-* System dependencies
+To run this repo locally:
+- clone it
+- `bundle install`
+- `rails db:create`
+- `rails db:migrate`
+- `rails db:seed`
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Run the lite test suite with `bundle exec rspec`
