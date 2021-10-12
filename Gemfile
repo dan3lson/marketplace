@@ -17,7 +17,7 @@ gem 'jwt'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 gem 'pg', '>= 0.18', '< 2.0'
-gem 'puma', '~> 4.3.5'
+gem 'puma', '~> 4.3.9'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 gem 'rails', '~> 6.0.3'
